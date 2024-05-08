@@ -12,6 +12,17 @@ Welcome to our Portfolio and Blogging Platform! This project aims to provide use
 - **User Authentication**: Secure user authentication system for both creators and readers.
 - **Admin Panel**: Manage portfolios, blog posts, and user accounts efficiently with an intuitive admin panel.
 - **Responsive Design**: Optimized for various devices to ensure a consistent user experience.
+  
+<!-- Logo -->
+<img src="path_to_your_logo_image" alt="Project Logo" width="100">
+
+<!-- Technologies Badges -->
+<span class="badge badge-primary">Laravel</span>
+<span class="badge badge-secondary">MySQL</span>
+<span class="badge badge-success">HTML</span>
+<span class="badge badge-info">CSS</span>
+<span class="badge badge-warning">Bootstrap</span>
+<span class="badge badge-danger">JavaScript</span>
 
 ## Installation
 
@@ -72,17 +83,6 @@ JavaScript
 Blade Templates
 Logo and Technologies
 To make your portfolio and blogging platform visually appealing, consider adding logos and technologies badges. Below is an example of how you can integrate logos and badges into your project:
-
-<!-- Logo -->
-<img src="path_to_your_logo_image" alt="Project Logo" width="100">
-
-<!-- Technologies Badges -->
-<span class="badge badge-primary">Laravel</span>
-<span class="badge badge-secondary">MySQL</span>
-<span class="badge badge-success">HTML</span>
-<span class="badge badge-info">CSS</span>
-<span class="badge badge-warning">Bootstrap</span>
-<span class="badge badge-danger">JavaScript</span>
 
 ##Contributing
 
