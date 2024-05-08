@@ -14,7 +14,7 @@ Welcome to our Portfolio and Blogging Platform! This project aims to provide use
 - **Responsive Design**: Optimized for various devices to ensure a consistent user experience.
   
 <!-- Logo -->
-<img src="./public/asset/images/BlogLogos/logo-no-background.png" alt="Project Logo" width="100">
+<img src="./public/assets/images/blogLogos/logo-no-background.png" alt="Project Logo" width="100">
 
 <!-- Technologies Badges -->
 <span class="badge badge-primary">Laravel</span>
