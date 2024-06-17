@@ -19,7 +19,7 @@ class ServiceController extends Controller
         $auth_user = Auth::user();
 
         $services = Service::all();
-        return view('admin.service.index', compact('services','auth_user'));
+        return view('admin.service.index', compact('services', 'auth_user'));
     }
 
     /**
@@ -31,7 +31,7 @@ class ServiceController extends Controller
     {
         $auth_user = Auth::user();
 
-        return view('admin.service.create','auth_user');
+        return view('admin.service.create', compact('auth_user'));
     }
 
     /**
@@ -48,7 +48,7 @@ class ServiceController extends Controller
             'description' => 'required|min:80|max:255',
         ]);
         Service::create($validated);
-        return to_route('admin.service.index')->with('message','New Service Added');
+        return to_route('admin.service.index')->with('message', 'New Service Added');
     }
 
     /**
@@ -64,7 +64,7 @@ class ServiceController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-    *
+     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -72,7 +72,7 @@ class ServiceController extends Controller
     {
         $auth_user = Auth::user();
 
-        return view('admin.service.edit', compact('service','auth_user'));
+        return view('admin.service.edit', compact('service', 'auth_user'));
     }
 
     /**
@@ -92,7 +92,6 @@ class ServiceController extends Controller
         ]);
         $service->update($validated);
         return to_route('admin.service.index')->with('message', 'Service Updated');
-        
     }
 
     /**
@@ -104,6 +103,6 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         $service->delete();
-        return back()->with('message','Service Deleted');
+        return back()->with('message', 'Service Deleted');
     }
 }

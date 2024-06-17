@@ -25,8 +25,8 @@ class BlogAdminContorller extends Controller
     {
         $auth_user = Auth::user();
 
-        $blogPosts= blog_post::with('post__categories')->get();
-        return view('admin.blog.index',compact('blogPosts','auth_user'));
+        $blogPosts = blog_post::with('post__categories')->get();
+        return view('admin.blog.index', compact('blogPosts', 'auth_user'));
     }
 
     /**
@@ -39,7 +39,7 @@ class BlogAdminContorller extends Controller
         $auth_user = Auth::user();
 
         $blogCategories = Post_Categories::all();
-        return view('admin.blog.create',compact('blogCategories','auth_user'));
+        return view('admin.blog.create', compact('blogCategories', 'auth_user'));
     }
 
     /**
@@ -54,7 +54,7 @@ class BlogAdminContorller extends Controller
             'title' => 'required|min:4|max:255',
             'description' => 'required|min:4',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'cat_id' => 'required|exists:post__categories,id'
+            'cat_id' => 'required|exists:post_categories,id'
         ]);
 
         $blogPost = new blog_post();
@@ -62,22 +62,22 @@ class BlogAdminContorller extends Controller
         $blogPost->description = $validated['description'];
         $blogPost->cat_id = $request->cat_id;
 
-        if($request->hasfile('image')){
-            $get_file = $request->file('image')->store('images/blogPosts','public');
+        if ($request->hasfile('image')) {
+            $get_file = $request->file('image')->store('images/blogPosts', 'public');
             $blogPost->image = $get_file;
         }
 
         $blogPost->save();
 
-        
+
         $subscribers = Subscriber::all();
         foreach ($subscribers as $subscriber) {
             $name = $subscriber->name;
             $email = $subscriber->email;
             Mail::to($subscriber->email)->send(new BlogPostNotification($blogPost, $name, $email));
         }
-        
-        return to_route('admin.blogs.index')->with('message','Portfolio Added');
+
+        return to_route('admin.blogs.index')->with('message', 'Portfolio Added');
     }
 
 
@@ -92,7 +92,7 @@ class BlogAdminContorller extends Controller
         $auth_user = Auth::user();
         $blogPost = blog_post::find($id);
         $blogCategories = Post_Categories::all();
-        return view('admin.blog.edit', compact('blogPost','blogCategories','auth_user'));
+        return view('admin.blog.edit', compact('blogPost', 'blogCategories', 'auth_user'));
     }
 
     /**
@@ -117,14 +117,14 @@ class BlogAdminContorller extends Controller
         $blogPost->description = $validated['description'];
         $blogPost->cat_id = $request->cat_id;
 
-        if($request->hasfile('image')){
-            Storage::delete('public/'.$blogPost->image);
-            $get_file = $request->file('image')->store('images/blogPosts','public');
+        if ($request->hasfile('image')) {
+            Storage::delete('public/' . $blogPost->image);
+            $get_file = $request->file('image')->store('images/blogPosts', 'public');
             $blogPost->image = $get_file;
         }
 
         $blogPost->update();
-        return to_route('admin.blogs.index')->with('message','Portfolio Updated');
+        return to_route('admin.blogs.index')->with('message', 'Portfolio Updated');
     }
 
     /**
@@ -136,10 +136,10 @@ class BlogAdminContorller extends Controller
     public function destroy($id)
     {
         $blogPost = blog_post::find($id);
-        if($blogPost->image != null){
-            Storage::delete('public/'.$blogPost->image);
+        if ($blogPost->image != null) {
+            Storage::delete('public/' . $blogPost->image);
         }
-        $blogPost -> delete();
+        $blogPost->delete();
         return back()->with('message', 'blogPost Deleted');
     }
 
@@ -148,16 +148,13 @@ class BlogAdminContorller extends Controller
         $searchedItem = $request->input('search');
 
         $blogPosts = blog_post::query()
-        ->where('title', 'LIKE', "%{$searchedItem}%")
-        ->orWhere('description', 'LIKE', "%{$searchedItem}%")
-        ->get();
+            ->where('title', 'LIKE', "%{$searchedItem}%")
+            ->orWhere('description', 'LIKE', "%{$searchedItem}%")
+            ->get();
 
         $auth_user = Auth::user();
 
-    // Return the search view with the resluts compacted
-    return view('admin.blog.search', compact('blogPosts','auth_user'));
-
+        // Return the search view with the resluts compacted
+        return view('admin.blog.search', compact('blogPosts', 'auth_user'));
     }
-
-   
 }

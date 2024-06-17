@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('blog_posts', function (Blueprint $table) {
             $table->id();
             // $table->foreignId('cat_id')->constrained('post_categories')->onDelete('cascade');
-            $table->unsignedBigInteger('cat_id');
-            $table->foreign('cat_id')->references('id')->on('post__categories')->onDelete('cascade');
+            $table->foreignId('cat_id');
+            $table->foreign('cat_id')->references('id')->on('post_categories')->onDelete('cascade');
             $table->string('title');
             $table->string('description');
-            
+
             $table->string('image');
             $table->timestamps();
         });

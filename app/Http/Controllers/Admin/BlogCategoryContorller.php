@@ -21,7 +21,7 @@ class BlogCategoryContorller extends Controller
     {
         $categories = Post_Categories::all();
         $auth_user = Auth::user();
-        return view('admin.blogCategory.index', compact('auth_user','categories'));
+        return view('admin.blogCategory.index', compact('auth_user', 'categories'));
     }
 
     /**
@@ -44,20 +44,20 @@ class BlogCategoryContorller extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'=> 'required|min:3',
+            'name' => 'required|min:3',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
-        
+
         $category = new Post_categories();
         $category->name = $validated['name'];
-        if($request->hasfile('image')){
-            $get_file = $request->file('image')->store('images/blogCategory','public');
+        if ($request->hasfile('image')) {
+            $get_file = $request->file('image')->store('images/blogCategory', 'public');
             $category->image = $get_file;
         }
         // Post_Categories::create($validated);
         $category->save();
 
-        return to_route('admin.blog-category.index')->with('message','New Category Added');
+        return to_route('admin.blog-category.index')->with('message', 'New Category Added');
     }
 
     /**
@@ -70,7 +70,7 @@ class BlogCategoryContorller extends Controller
     {
         $category = Post_Categories::find($id);
         $auth_user = Auth::user();
-        return view('admin.blogCategory.edit', compact('category','auth_user'));
+        return view('admin.blogCategory.edit', compact('category', 'auth_user'));
     }
 
     /**
@@ -80,23 +80,24 @@ class BlogCategoryContorller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id){
-       
+    public function update(Request $request, $id)
+    {
+
         $validated = $request->validate([
-            'name'=> 'required|min:3',
+            'name' => 'required|min:3',
             'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
         $category = Post_Categories::find($id);
         $category->name = $validated['name'];
 
-        if($request->hasfile('image')){
-            Storage::delete('public/'.$category->image);
-            $get_file = $request->file('image')->store('images/blogCategory','public');
+        if ($request->hasfile('image')) {
+            Storage::delete('public/' . $category->image);
+            $get_file = $request->file('image')->store('images/blogCategory', 'public');
             $category->image = $get_file;
         }
         $category->update();
 
-        return to_route('admin.blog-category.index')->with('message','Category Updated');
+        return to_route('admin.blog-category.index')->with('message', 'Category Updated');
     }
 
     /**
@@ -111,6 +112,4 @@ class BlogCategoryContorller extends Controller
         $category->delete();
         return to_route('admin.blog-category.index')->with('message', 'Category Deleted');
     }
-
-
 }

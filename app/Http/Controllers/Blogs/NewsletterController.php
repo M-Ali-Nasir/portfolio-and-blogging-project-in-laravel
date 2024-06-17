@@ -19,7 +19,7 @@ class NewsletterController extends Controller
             'name' =>  'required'
         ]);
 
-        Subscriber::create([    
+        Subscriber::create([
             'email' => $request->email,
             'name' => $request->name,
         ]);
@@ -27,19 +27,21 @@ class NewsletterController extends Controller
         $userEmail = $request->input('email');
         Mail::to($request->email)->send(new SubscriptionConfirmation($userName, $userEmail));
 
-        return redirect()->route('blogs')->with('success','Subscribed successfully');
+        return redirect()->back()->with('success', 'Subscribed successfully');
     }
-    
-    public function unsubscribeView($email){
-        if($email){
+
+    public function unsubscribeView($email)
+    {
+        if ($email) {
             return view('mail.unsbscribing', compact('email'));
         }
     }
 
-    public function unsubscribe(Request $request){
+    public function unsubscribe(Request $request)
+    {
         $email = $request->email;
         $user = subscriber::where('email', $email)->first();
-        if($user){
+        if ($user) {
             $userName = $user->name;
             $userEmail = $user->email;
             $user->delete();

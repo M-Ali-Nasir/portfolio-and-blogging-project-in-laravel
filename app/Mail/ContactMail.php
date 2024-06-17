@@ -25,8 +25,7 @@ class ContactMail extends Mailable
         public string $email,
         public string $subject_mail,
         public string $content
-    )
-    {
+    ) {
         //
     }
 
@@ -38,8 +37,12 @@ class ContactMail extends Mailable
     public function envelope()
     {
         return new Envelope(
+            from: new Address($this->email, $this->name),
+            replyTo: [
+                new Address($this->email, $this->name)
+            ],
             subject: $this->subject_mail,
-            from: new Address($this->email, $this->name)          
+
         );
     }
 
@@ -52,7 +55,7 @@ class ContactMail extends Mailable
     {
         return new Content(
             view: 'mail.contactmail',
-            
+
         );
     }
 

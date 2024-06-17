@@ -11,6 +11,9 @@ use App\Models\Setting;
 use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\blog_post;
+use App\Models\Post_Categories;
+use App\Models\BlogComment;
 
 class HomeController extends Controller
 {
@@ -31,10 +34,11 @@ class HomeController extends Controller
             'degree',
             'profile_pic',
             'birth_day',
-            'experience')->first();
+            'experience'
+        )->first();
 
-        $experiences = Qualification::where('type',['Work'])->orderBy('id', 'desc')->take(3)->get();
-        $educations = Qualification::where('type',['Education'])->orderBy('id', 'desc')->take(3)->get();
+        $experiences = Qualification::where('type', ['Work'])->orderBy('id', 'desc')->take(3)->get();
+        $educations = Qualification::where('type', ['Education'])->orderBy('id', 'desc')->take(3)->get();
 
         $skills = Skill::orderBy('id', 'desc')->take(6)->get();
 
@@ -43,11 +47,25 @@ class HomeController extends Controller
         $categories = Category::all();
         $reviewers = Review::orderBy('id', 'desc')->take(5)->get();
 
-        $portfolios= Portfolio::with('category')->orderBy('id', 'desc')->take(6)->get();
+        $portfolios = Portfolio::with('category')->orderBy('id', 'desc')->take(6)->get();
 
         $setting = Setting::first();
 
-        return view('home',compact('user','experiences','educations','skills',
-                                    'services','categories','portfolios','setting','reviewers'));
+        $blogs = blog_post::orderBy('id', 'desc')->take(3)->get();
+        $blogCategories = Post_Categories::all();
+
+        return view('home', compact(
+            'user',
+            'experiences',
+            'educations',
+            'skills',
+            'services',
+            'categories',
+            'portfolios',
+            'setting',
+            'reviewers',
+            'blogs',
+            'blogCategories'
+        ));
     }
 }

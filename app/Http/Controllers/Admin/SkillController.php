@@ -19,7 +19,7 @@ class SkillController extends Controller
         $auth_user = Auth::user();
 
         $skills = Skill::all();
-        return view('admin.skill.index', compact('skills','auth_user'));
+        return view('admin.skill.index', compact('skills', 'auth_user'));
     }
 
     /**
@@ -31,8 +31,7 @@ class SkillController extends Controller
     {
         $auth_user = Auth::user();
 
-        return view('admin.skill.create','auth_user');
-
+        return view('admin.skill.create', compact('auth_user'));
     }
 
     /**
@@ -49,7 +48,7 @@ class SkillController extends Controller
             'percent' => 'required|numeric|gt:0|lte:100',
         ]);
         Skill::create($validated);
-        return to_route('admin.skill.index')->with('message','New skill Added');
+        return to_route('admin.skill.index')->with('message', 'New skill Added');
     }
 
     /**
@@ -73,7 +72,7 @@ class SkillController extends Controller
     {
         $auth_user = Auth::user();
 
-        return view('admin.skill.edit', compact('skill','auth_user'));
+        return view('admin.skill.edit', compact('skill', 'auth_user'));
     }
 
     /**
@@ -90,9 +89,8 @@ class SkillController extends Controller
             'color' => 'required|min:7',
             'percent' => 'required|numeric|gt:0|lte:100',
         ]);
-        $skill-> update($validated);
+        $skill->update($validated);
         return to_route('admin.skill.index')->with('message', 'Skill Updated');
-
     }
 
     /**
@@ -103,7 +101,7 @@ class SkillController extends Controller
      */
     public function destroy(Skill $skill)
     {
-        $skill -> delete();
+        $skill->delete();
         return back()->with('message', 'Skill Deleted');
     }
 }

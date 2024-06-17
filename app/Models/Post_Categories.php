@@ -9,7 +9,8 @@ use App\Models\blog_post;
 class Post_Categories extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','image'];
+    protected $table = 'post_categories';
+    protected $fillable = ['name', 'image'];
 
     public function blog_posts()
     {

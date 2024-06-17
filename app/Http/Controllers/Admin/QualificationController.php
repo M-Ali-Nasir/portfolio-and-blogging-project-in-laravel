@@ -18,16 +18,16 @@ class QualificationController extends Controller
     {
         $auth_user = Auth::user();
 
-        $educations = Qualification::where('type',['Education'])->orderBy('id')->get();
-        return view('admin.qualification.edu',compact('educations','auth_user'));
+        $educations = Qualification::where('type', ['Education'])->orderBy('id')->get();
+        return view('admin.qualification.edu', compact('educations', 'auth_user'));
     }
 
     public function showExperience()
     {
         $auth_user = Auth::user();
 
-        $experiences = Qualification::where('type',['Work'])->orderBy('id')->get();
-        return view('admin.qualification.exp', compact('experiences','auth_user'));
+        $experiences = Qualification::where('type', ['Work'])->orderBy('id')->get();
+        return view('admin.qualification.exp', compact('experiences', 'auth_user'));
     }
 
     public function index()
@@ -35,7 +35,7 @@ class QualificationController extends Controller
         $auth_user = Auth::user();
 
         $qualifications = Qualification::all();
-        return view('admin.qualification.index', compact('qualifications','auth_user'));
+        return view('admin.qualification.index', compact('qualifications', 'auth_user'));
     }
     /**
      * Show the form for creating a new resource.
@@ -46,7 +46,7 @@ class QualificationController extends Controller
     {
         $auth_user = Auth::user();
 
-        return view('admin.qualification.create','auth_user');
+        return view('admin.qualification.create', compact('auth_user'));
     }
 
     /**
@@ -62,14 +62,14 @@ class QualificationController extends Controller
             'title' => 'required|min:3',
             'association' => 'required|min:3',
             'description' => 'required|min:3',
-            'type'=> 'required',
-            'from'=> 'required|min:4',
-            'to'=> 'required|min:4'
+            'type' => 'required',
+            'from' => 'required|min:4',
+            'to' => 'required|min:4'
         ]);
-                // dd($validated);
+        // dd($validated);
 
         Qualification::create($validated);
-        return to_route('admin.qualification.edu')->with('message','New Qualification Added');
+        return to_route('admin.qualification.edu')->with('message', 'New Qualification Added');
     }
 
     /**
@@ -93,7 +93,7 @@ class QualificationController extends Controller
     {
         $auth_user = Auth::user();
 
-        return view('admin.qualification.edit', compact('qualification','auth_user'));
+        return view('admin.qualification.edit', compact('qualification', 'auth_user'));
     }
 
     /**
@@ -109,17 +109,17 @@ class QualificationController extends Controller
             'title' => 'required|min:3',
             'association' => 'required|min:3',
             'description' => 'required|min:3',
-            'type'=> 'required',
-            'from'=> 'required|min:4',
-            'to'=> 'required|min:4'
+            'type' => 'required',
+            'from' => 'required|min:4',
+            'to' => 'required|min:4'
         ]);
-                // dd($validated);
+        // dd($validated);
 
         $qualification->update($validated);
-        if($request['type']== 'Education'){
-            return to_route('admin.qualification.edu')->with('message','Education Updated');
-        }else{
-            return to_route('admin.qualification.exp')->with('message','Experience Updated');
+        if ($request['type'] == 'Education') {
+            return to_route('admin.qualification.edu')->with('message', 'Education Updated');
+        } else {
+            return to_route('admin.qualification.exp')->with('message', 'Experience Updated');
         }
     }
 
@@ -131,7 +131,7 @@ class QualificationController extends Controller
      */
     public function destroy(Qualification $qualification)
     {
-        $qualification -> delete();
+        $qualification->delete();
         return back()->with('message', 'Qualification Deleted');
     }
 }

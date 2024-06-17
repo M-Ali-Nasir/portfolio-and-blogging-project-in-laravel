@@ -21,7 +21,7 @@ class ReviewController extends Controller
         $auth_user = Auth::user();
 
         $reviews = Review::all();
-        return view('admin.review.index',compact('reviews','auth_user'));
+        return view('admin.review.index', compact('reviews', 'auth_user'));
     }
 
     /**
@@ -33,7 +33,7 @@ class ReviewController extends Controller
     {
         $auth_user = Auth::user();
 
-        return view('admin.review.create','auth_user');
+        return view('admin.review.create', compact('auth_user'));
     }
 
     /**
@@ -56,13 +56,13 @@ class ReviewController extends Controller
         $review->job = $validated['job'];
         $review->description = $validated['description'];
 
-        if($request->hasfile('image')){
-            $get_file = $request->file('image')->store('images/reviewers','public');
+        if ($request->hasfile('image')) {
+            $get_file = $request->file('image')->store('images/reviewers', 'public');
             $review->image = $get_file;
         }
 
         $review->save();
-        return to_route('admin.review.index')->with('message','Review Added');
+        return to_route('admin.review.index')->with('message', 'Review Added');
     }
 
     /**
@@ -95,16 +95,16 @@ class ReviewController extends Controller
         $review->job = $validated['job'];
         $review->description = $validated['description'];
 
-        if($request->hasfile('image')){
-            if($review->image != null ){
-            Storage::delete('public/'.$review->image);
+        if ($request->hasfile('image')) {
+            if ($review->image != null) {
+                Storage::delete('public/' . $review->image);
             }
-            $get_new_file = $request->file('image')->store('images/reviewers','public');
+            $get_new_file = $request->file('image')->store('images/reviewers', 'public');
             $review->image = $get_new_file;
         }
 
         $review->update();
-        return to_route('admin.review.index')->with('message','Review Updated');
+        return to_route('admin.review.index')->with('message', 'Review Updated');
     }
 
     /**
@@ -118,7 +118,7 @@ class ReviewController extends Controller
     {
         $auth_user = Auth::user();
 
-        return view('admin.review.edit', compact('review','auth_user'));
+        return view('admin.review.edit', compact('review', 'auth_user'));
     }
 
     /**
@@ -129,10 +129,10 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        if($review->image != null){
-            Storage::delete('public/'.$review->image);
+        if ($review->image != null) {
+            Storage::delete('public/' . $review->image);
         }
-        $review -> delete();
+        $review->delete();
         return back()->with('message', 'Review Deleted');
     }
 }
